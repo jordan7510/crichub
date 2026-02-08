@@ -32,7 +32,7 @@ export default function Home() {
     <div className="h-screen w-screen flex justify-center bg-black">
       <div className="flex flex-col items-center ">
         <div className="mt-2 mb-4 py-2">
-          <p className="font-extrabold text-3xl text-white ">CRIC-HUB</p>
+          <p className="font-extrabold text-3xl text-red-500 ">CRIC-HUB</p>
         </div>
         <div className="border  py-12 px-6 rounded">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-4">
