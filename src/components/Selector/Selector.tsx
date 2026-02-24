@@ -22,7 +22,7 @@ export default function Selector({ channels, currentChannel, setCurrentChannel }
                         <span
                             key={ch.id}
                             onClick={() => handleSelect(ch.id)}
-                            className={` text-gray-800 rounded-md p-1 hover:bg-pink-700 hover:text-white hover:cursor-pointer duration-300 font-medium text-[10px] ${isSelected ? "bg-pink-700 text-white" : "bg-gray-200"}`} >
+                            className={` text-gray-200 rounded-md p-1 hover:bg-pink-700 hover:text-white hover:cursor-pointer duration-300 font-medium text-[8px] md:text-[12px] ${isSelected ? "bg-pink-700 text-white" : "bg-gray-700"}`} >
                             {ch?.name}
                         </span>
                     )
