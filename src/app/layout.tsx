@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header/Header";
 import Disclaimer from "@/components/Disclaimer/Disclaimer";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
         >
           <Header />
           {children}
+          <Analytics />
           <Disclaimer />
         </body>
       </html>
