@@ -1,12 +1,16 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
 
     const WEBHOOK_SECRET = process.env.WEBHOOK_SIGNING_SECRET;
     if (!WEBHOOK_SECRET) {
-        throw new Error("Please add Web hook siging secret in .env")
+        return NextResponse.json(
+            { error: "Webhook signing secret missing" },
+            { status: 500 }
+        );
     }
 
     const headerPlayload = headers();
@@ -15,7 +19,10 @@ export async function POST(req: Request) {
     const svix_signature = (await headerPlayload).get("svix-signature")
 
     if (!svix_id || !svix_signature || !svix_timestamp) {
-        return new Error("Error occured, no svix headers.")
+        return NextResponse.json(
+            { error: "Missing svix headers" },
+            { status: 400 }
+        );
     }
 
     const payload = await req.json()
@@ -31,7 +38,10 @@ export async function POST(req: Request) {
         }) as WebhookEvent
     } catch (err) {
         console.error("Error verifying webhooks.", err)
-        return new Response("Error occures", { status: 400 })
+        return NextResponse.json(
+            { error: "Invalid webhook signature" },
+            { status: 400 }
+        );
     }
 
     // const { id } = evt.data
@@ -64,7 +74,7 @@ export async function POST(req: Request) {
 
     if (eventType === "session.created") {
         try {
-            const sessionData =  evt.data
+            const sessionData = evt.data
             console.log("Session created", sessionData)
         } catch (error) {
             console.log("Error saving session in DB", error);
