@@ -1,9 +1,9 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server';
 
-const isRootRoute = createRouteMatcher([
-    "/",
-])
+// const isRootRoute = createRouteMatcher([
+//     "/",
+// ])
 const isLiveRoute = createRouteMatcher([
     "/live(.*)",
 ])
@@ -16,13 +16,13 @@ if(isLiveRoute(req)){
     await auth.protect()
 }
 
-if(isRootRoute(req)){
-    if(isAuthenticated){
-        return NextResponse.redirect(new URL("/live", url));
-    }else{
-        return redirectToSignIn()
-    }
-}
+// if(isRootRoute(req)){
+//     if(isAuthenticated){
+//         return NextResponse.redirect(new URL("/live", url));
+//     }else{
+//         return redirectToSignIn()
+//     }
+// }
 
 })
 

@@ -1,4 +1,4 @@
-import { Channels } from "@/Types/Channels";
+import { Channels } from "@/Types/Types";
 import React from "react";
 
 interface SelectorProps {

@@ -2,7 +2,7 @@
 import Selector from "@/components/Selector/Selector";
 import { useEffect, useState } from "react";
 import VideoPlayer from "@/components/VideoPlayer/VideoPlayer";
-import { Channels } from "@/Types/Channels";
+import { Channels } from "@/Types/Types";
 
 export default function Live() {
   const url = process.env.NEXT_PUBLIC_LINK;
@@ -29,10 +29,10 @@ export default function Live() {
   }, [url]);
 
   return (
-    <main className="min-h-screen flex flex-col px-2 mt-20">
+    <main className="min-h-screen flex flex-col px-2 mt-1">
 
       {/* Video Player section */}
-      <div className="md:h-96 md:w-full h-72 w-full border-2 rounded-lg mx-auto">
+      <div className="md:h-96 md:w-full h-72 w-full rounded-lg mx-auto">
         {
           currentChannel ? (
             <VideoPlayer

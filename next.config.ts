@@ -17,6 +17,12 @@ const nextConfig: NextConfig = {
       // Cloudflare Tunnel
       "https://*.trycloudflare.com",
     ],
+    images:{
+      remotePatterns:[
+        {protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',}
+      ]
+    }
 };
 
 export default nextConfig;

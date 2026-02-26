@@ -3,8 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header/Header";
-import Disclaimer from "@/components/Disclaimer/Disclaimer";
 import { Analytics } from "@vercel/analytics/next"
+import Footer from "@/components/Footer/Footer";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,18 +28,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-gray-950`}
-        >
-          <Header />
-          {children}
-          <Analytics />
-          <Disclaimer />
-        </body>
-      </html>
-    </ClerkProvider>
+   
+      <ClerkProvider>
+        <html lang="en">
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-gray-950`}
+          >
+            <Header />
+            {children}
+            <Analytics />
+           <Footer/>
+          </body>
+        </html>
+      </ClerkProvider>
+   
+
 
   );
 }

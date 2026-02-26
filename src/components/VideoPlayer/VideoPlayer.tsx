@@ -1,4 +1,4 @@
-import { Channels } from "../../Types/Channels"
+import { Channels } from "../../Types/Types"
 
 interface VideoPlayerProps {
   currentChannel: Channels | null

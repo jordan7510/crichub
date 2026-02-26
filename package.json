@@ -14,9 +14,11 @@
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.3.7",
     "@vercel/analytics": "^1.6.1",
+    "mongoose": "^9.2.2",
     "next": "16.1.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-icons": "^5.5.0",
     "svix": "^1.86.0"
   },
   "devDependencies": {
