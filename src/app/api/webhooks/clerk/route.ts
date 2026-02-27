@@ -2,9 +2,11 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import { User } from "@/Models/User";
+import dbConnect from "@/lib/dbConnect";
 
 export async function POST(req: Request) {
-
+    await dbConnect();
     const WEBHOOK_SECRET = process.env.WEBHOOK_SIGNING_SECRET;
     if (!WEBHOOK_SECRET) {
         return NextResponse.json(
@@ -46,41 +48,39 @@ export async function POST(req: Request) {
 
     // const { id } = evt.data
     const eventType = evt.type
-
     if (eventType === "user.created") {
-        try {
-            const { email_addresses, primary_email_address_id } = evt.data
-            // const primaryEmail = email_addresses.find((email) => email.id === primary_email_address_id)
 
-            // if (!primaryEmail) {
-            //     return new Response("No primary email found", { status: 400 })
-            // }
+        try {
+            const user = evt.data as {
+                primary_email_address_id?: string | null,
+                email_addresses?: Array<{ id: string, email_address: string }>,
+                primary_phone_number_id?: string | null,
+                phone_numbers?: Array<{ id: string, phone_number: string }>
+            }
+            console.log("clerk user data", user);
+            const primaryEmail = user.email_addresses?.find((e) => e.id === user.primary_email_address_id)
+            const primaryPhone = user.phone_numbers?.find((p) => p.id === user.primary_phone_number_id)
+            const firstName = evt.data.first_name ?? ""
+            const lastName = evt.data.last_name ?? ""
 
             // Create a new user in DB
-            const newUser = {
-                id: evt.data.id,
-                email: email_addresses,
-            }
-            console.log("New user created", newUser)
+            const newUser = new User({
+                clerkUserId: evt.data.id,
+                name: `${firstName} ${lastName}`.trim() || undefined,
+                email: primaryEmail?.email_address,
+                phone: primaryPhone?.phone_number,
+                lastSignInAt: evt.data.last_sign_in_at ? new Date(evt.data.last_sign_in_at) : undefined,
+            })
+            console.log("new created user", newUser);
+
+            const savedUser = await newUser.save()
+            console.log("user created in DB", savedUser);
+            return NextResponse.json({ success: true, savedUser, message: "Signup success" }, { status: 201 })
 
         } catch (error) {
             console.log("Error creating user in DB", error);
-
             return new Response("Error creating user in DB", { status: 400 })
         }
-
-    }
-
-
-    if (eventType === "session.created") {
-        try {
-            const sessionData = evt.data
-            console.log("Session created", sessionData)
-        } catch (error) {
-            console.log("Error saving session in DB", error);
-            return new Response("Error saving session in DB", { status: 400 })
-        }
-
     }
 
 

@@ -13,7 +13,10 @@ const UserSchema = new Schema({
         required: true,
         index: true
     },
-    country: String,
+    country: {
+        type: String,
+        default: "IND"
+    },
     phone: String,
     role: {
         type: String,
